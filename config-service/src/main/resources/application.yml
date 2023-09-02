@@ -14,7 +14,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/marcoxio/cloud_native/config-repo
+          uri: https://github.com/marcoxio/cloud_native/tree/main/config-repo
           default-label: main
           timeout: 5
           clone-on-start: true
