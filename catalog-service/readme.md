@@ -153,3 +153,39 @@ select * from flyway_schema_history;
 
 # delete image
 docker rm -fv polar-postgres
+
+# execute build image Dockerfile
+docker build -t my-java-image:1.0.0 .
+
+# view images docker
+docker images my-java-image
+
+# run container image
+docker run --rm my-java-image:1.0.0
+
+# build the JAR artefact #1
+./gradlew clean bootJar
+
+# build image Dockerfile #2
+docker build -t catalog-service .
+
+# build image using maven
+docker build --build-arg JAR_FILE=target/*.jar -t catalog-service .
+
+# delete images first #3 
+docker rm -f catalog-service polar-postgres
+
+# create network #4
+docker network create catalog-network
+
+# execute polar-postgres #5
+docker run -d --name polar-postgres --net catalog-network -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password -e POSTGRES_DB=polardb_catalog -p 5432:5432 postgres:14.4
+
+# execute catalog service #6
+docker run -d --name catalog-service --net catalog-network -p 9001:9001 -e SPRING_DATASOURCE_URL=jdbc:postgresql://polar-postgres:5432/polardb_catalog -e SPRING_PROFILES_ACTIVE=testdata catalog-service
+
+# request service by Docker
+http :9001/books
+
+# request service by Docker Toolbox
+http 192.168.99.100:9001/books
