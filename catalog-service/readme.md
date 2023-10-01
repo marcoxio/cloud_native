@@ -175,6 +175,9 @@ docker build --build-arg JAR_FILE=target/*.jar -t catalog-service .
 # delete images first #3 
 docker rm -f catalog-service polar-postgres
 
+# delete network 
+docker network rm catalog-network
+
 # create network #4
 docker network create catalog-network
 
@@ -189,3 +192,58 @@ http :9001/books
 
 # request service by Docker Toolbox
 http 192.168.99.100:9001/books
+
+# Create Cluster Kubernetes by profile polar
+minikube start --cpus 2 --memory 4g --driver docker --profile polar
+
+# Obtain list all nodes cluster
+kubectl get nodes
+
+# list all the available contexts
+kubectl config get-contexts
+
+# current contex
+kubectl config current-context
+
+# change the current context
+kubectl config use-context polar
+
+# run the following command to deploy PostgreSQL in your local cluste
+kubectl apply -f services
+
+# review logs
+kubectl logs deployment/polar-postgres
+
+# review pod
+kubectl get pod
+
+# delete services
+kubectl delete -f services
+
+# stop profile
+minikube stop --profile polar
+
+# start profile
+minikube start --profile polar
+
+# apply manifest service
+kubectl apply -f k8s/service.yml
+
+# apply manifest service
+kubectl apply -f k8s/deployment.yml
+
+# get service
+kubectl get svc -l app=catalog-service
+
+# listener de port for request
+kubectl port-forward service/catalog-service 9001:80
+
+#
+gradlew bootBuildImage
+minikube image load catalog -service --profile polar
+
+kubectl apply -f k8s/deployment.yml
+kubectl get pods -l app=catalog-service
+
+kubectl delete -f k8s
+kubectl delete -f services
