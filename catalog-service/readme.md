@@ -238,12 +238,14 @@ kubectl get svc -l app=catalog-service
 # listener de port for request
 kubectl port-forward service/catalog-service 9001:80
 
-#
+# build image docker and load image with minukube profile polar
 gradlew bootBuildImage
 minikube image load catalog -service --profile polar
 
+# apply manifest specific
 kubectl apply -f k8s/deployment.yml
 kubectl get pods -l app=catalog-service
 
+# Delete manifest kubernetes
 kubectl delete -f k8s
 kubectl delete -f services
