@@ -249,3 +249,14 @@ kubectl get pods -l app=catalog-service
 # Delete manifest kubernetes
 kubectl delete -f k8s
 kubectl delete -f services
+
+# validar vulnerabilidad imagen
+docker run -it --rm anchore/grype .
+
+# build image with token
+./gradlew bootBuildImage \
+--imageName ghcr.io/<your_github_username>/catalog-service \
+--publishImage \
+-PregistryUrl=ghcr.io \
+-PregistryUsername=<your_github_username> \
+-PregistryToken=<your_github_token>
