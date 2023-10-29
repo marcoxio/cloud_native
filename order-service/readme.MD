@@ -16,3 +16,6 @@ http POST :9002/orders isbn=1234567890 quantity=3
 # run webFlux
 ./gradlew test --tests OrderControllerWebFluxTests
 
+# /kubernetes/platform/development
+kubectl apply -f services
+
