@@ -3,7 +3,7 @@ on: push
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: marcoxio/config-service
+  IMAGE_NAME: marcoxio/order-service
   VERSION: latest
 
 jobs:
