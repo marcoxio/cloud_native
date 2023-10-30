@@ -3,9 +3,7 @@ package com.polarbookshop.orderservice.book;
 import com.polarbookshop.orderservice.order.web.OrderController;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,7 +13,7 @@ import reactor.test.StepVerifier;
 
 import java.io.IOException;
 
-@WebFluxTest(OrderController.class)
+@TestMethodOrder(MethodOrderer.Random.class)
 public class BookClientTests {
     private MockWebServer mockWebServer;
     private BookClient bookClient;
