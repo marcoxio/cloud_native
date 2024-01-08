@@ -17,7 +17,9 @@ jobs:
         project: [
           catalog-service,
           config-service,
-          order-service
+          order-service,
+          edge-service,
+          dispatcher-service
         ]
     steps:
       - name: Checkout repository
