@@ -19,7 +19,7 @@ jobs:
           config-service,
           order-service,
           edge-service,
-          dispatcher-service
+          dispatcher-service,
         ]
     steps:
       - name: Checkout repository
