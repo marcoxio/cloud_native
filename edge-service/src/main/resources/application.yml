@@ -83,10 +83,10 @@ resilience4j:
   circuitbreaker:
     configs:
       default:
-        slidingWindowSize: 20
-        permittedNumberOfCallsInHalfOpenState: 5
-        failureRateThreshold: 50
-        waitDurationInOpenState: 15000
+        slidingWindowSize: 20 # call to api | closed
+        permittedNumberOfCallsInHalfOpenState: 5 #call api failed retry | half-open
+        failureRateThreshold: 50 #50% faileds | open
+        waitDurationInOpenState: 15000 #15s waiting
   timelimiter:
     configs:
       default:
